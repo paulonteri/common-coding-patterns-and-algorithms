@@ -5,7 +5,7 @@ Given a set with distinct elements, find all of its distinct subsets.
 Example 1:
     Input: [1, 3]
     Output: [], [1], [3], [1,3]
-    
+
 Example 2:
     Input: [1, 5, 3]
     Output: [], [1], [5], [3], [1,5], [1,3], [5,3], [1,5,3]
@@ -19,7 +19,7 @@ def find_subsets(nums):
         # we will take all existing subsets and insert the current number in them to create new subsets
         for idx in range(len(subsets)):
             # create a new subset from the existing subset and insert the current element to it
-            # arr = subsets[i] # gives wrong answer
+            # arr = subsets[idx] # gives wrong answer -> https://github.com/paulonteri/patterns-for-coding-questions/issues/1
             arr = list(subsets[idx])
             arr.append(number)
             subsets.append(arr)
