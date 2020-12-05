@@ -7,45 +7,40 @@ Example 1:
 Example 2:
     Input: [1, 5, 3, 3]
     Output: [], [1], [5], [3], [1,5], [1,3], [5,3], [1,5,3], [3,3], [1,3,3], [3,3,5], [1,5,3,3] 
+
+Also available here: https://github.com/paulonteri/patterns-for-coding-questions/blob/master/Subsets/subsets_with_duplicates.py
 """
 
 
 def find_subsets(nums):
-    subsets = []
+    subsets = [[]]
 
     if len(nums) < 1:
         return subsets
     nums.sort()
-    subsets.append([nums[0]])
 
-    idx = 1
+    idx = 0
     # used to mark the idx where the non duplicate subsets started being added
     last_added_start = None
     while idx < len(nums):
+        curr = nums[idx]
+        subsets_len = len(subsets)
 
-        # non duplicates
-        if nums[idx] != nums[idx-1]:
+        if idx > 0 and curr == nums[idx-1]:
 
-            curr_len = len(subsets)
-            for i in range(curr_len):
-                arr = list(subsets[i])
-                arr.append(nums[idx])
-                subsets.append(arr)
+            for index in range(last_added_start, subsets_len):
+                item = list(subsets[index])
+                item.append(curr)
+                subsets.append(item)
 
-            subsets.append([nums[idx]])
-            last_added_start = idx
-
-        # duplicates
         else:
-            # current and the previous elements are same so we,
-            #  create new subsets only from the subsets added in the previous step: start from `last_added_start`
-            curr_len = len(subsets)
-            while last_added_start < curr_len:
-                arr = list(subsets[last_added_start])
-                arr.append(nums[idx])
-                subsets.append(arr)
-                last_added_start += 1
 
+            for index in range(subsets_len):
+                item = list(subsets[index])
+                item.append(curr)
+                subsets.append(item)
+
+        last_added_start = subsets_len
         idx += 1
 
     return subsets
@@ -73,11 +68,14 @@ def find_subsets2(nums):
 
 
 def main():
-
     print("Here is the list of subsets: " + str(find_subsets([1, 3, 3])))
     print("Here is the list of subsets: " + str(find_subsets2([1, 3, 3])))
     print("Here is the list of subsets: " + str(find_subsets([1, 5, 3, 3])))
     print("Here is the list of subsets: " + str(find_subsets2([1, 5, 3, 3])))
+    print("Here is the list of subsets: " +
+          str(find_subsets([1, 2, 3, 6, 6, 6])))
+    print("Here is the list of subsets: " +
+          str(find_subsets2([1, 2, 3, 6, 6, 6])))
 
 
 main()
