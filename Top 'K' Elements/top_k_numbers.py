@@ -23,20 +23,22 @@ def find_k_largest_numbers2(nums, k):
 
 
 def find_k_largest_numbers(nums, k):
-    minHeap = []
+    min_heap = []
+
     # put first 'K' numbers in the min heap
     for i in range(k):
-        heapq.heappush(minHeap, nums[i])
+        heapq.heappush(min_heap, nums[i])
 
+    # remember that in the heap(min-heap), the no. at the top will always be the smallest in the heap
     # go through the remaining numbers of the array, if the number from the array is bigger than the
     # top(smallest) number of the min-heap, remove the top number from heap and add the number from array
     for i in range(k, len(nums)):
-        if nums[i] > minHeap[0]:
-            heapq.heappop(minHeap)
-            heapq.heappush(minHeap, nums[i])
+        if nums[i] > min_heap[0]:
+            heapq.heappop(min_heap)
+            heapq.heappush(min_heap, nums[i])
 
     # the heap has the top 'K' numbers, return them in a list
-    return list(minHeap)
+    return list(min_heap)
 
 
 def main():
